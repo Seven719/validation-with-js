@@ -70,3 +70,11 @@ zip.addEventListener("input", () => {
 countrySelector.addEventListener("click", () => {
   checkZip(selectedCountry());
 });
+
+passwordConfirmation.addEventListener("input", () => {
+  if (password.value != passwordConfirmation.value) {
+    passwordConfirmation.setCustomValidity("Passwords are not matching");
+  } else {
+    passwordConfirmation.setCustomValidity("");
+  }
+});

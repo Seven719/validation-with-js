@@ -10,19 +10,24 @@
   <body>
     <form action="submit" novalidate>
       <label for="email">Email</label>
-      <input id="email" type="email" required />
+      <input id="email" type="email" name="email" required />
 
       <label for="country">Country</label>
-      <input id="country" type="text" required />
+      <select id="country" name="country"></select>
 
       <label for="zip">Zip Code</label>
-      <input id="zip" type="text" required />
+      <input id="zip" type="text" name="zip" required />
 
       <label for="password">Password</label>
-      <input id="password" type="password" required />
+      <input id="password" type="password" name="password" required />
 
       <label for="password-confirmation">Password Confirmation</label>
-      <input id="password-confirmation" type="password" required />
+      <input
+        id="password-confirmation"
+        type="password"
+        name="password-confirmation"
+        required
+      />
 
       <button id="btn-submit" type="submit">Submit</button>
     </form>

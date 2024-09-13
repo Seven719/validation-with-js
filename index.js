@@ -5,7 +5,7 @@ const password = document.getElementById("password");
 const passwordConfirmation = document.getElementById("password-confirmation");
 const submitBtn = document.getElementById("btn-submit");
 
-const elements = [email, country, zip, password, passwordConfirmation];
+const elements = [email, countrySelector, zip, password, passwordConfirmation];
 const countries = {
   "United States": [
     new RegExp("^\\d{5}(?:[-\\s]\\d{4})?$"),

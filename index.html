@@ -8,9 +8,9 @@
     <script src="index.js" defer></script>
   </head>
   <body>
-    <form action="submit" novalidate>
+    <form action="submit" method="post" novalidate>
       <label for="email">Email</label>
-      <input id="email" type="email" name="email" required />
+      <input id="email" type="email" autocomplete="off" name="email" required />
 
       <label for="country">Country</label>
       <select id="country" name="country"></select>

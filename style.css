@@ -10,3 +10,7 @@ label {
 input {
   display: block;
 }
+
+input.touched:invalid {
+  border: 2px solid red;
+}

@@ -75,6 +75,12 @@ const emailValidation = () => {
 };
 
 const attachEventListeners = () => {
+  elements.forEach((element) => {
+    element.addEventListener("blur", () => {
+      element.classList.add("touched");
+    });
+  });
+
   zip.addEventListener("input", () => checkZip(countrySelector.value));
   countrySelector.addEventListener("change", () =>
     checkZip(countrySelector.value)

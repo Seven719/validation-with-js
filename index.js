@@ -3,7 +3,7 @@ const countrySelector = document.getElementById("country");
 const zip = document.getElementById("zip");
 const password = document.getElementById("password");
 const passwordConfirmation = document.getElementById("password-confirmation");
-const submitBtn = document.getElementById("btn-submit");
+const form = document.querySelector("form");
 
 const elements = [email, countrySelector, zip, password, passwordConfirmation];
 const countries = {
@@ -29,52 +29,59 @@ const countries = {
   ],
 };
 
-submitBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  elements.forEach((element) => {
-    if (element.validity.valueMissing) {
-      console.log("Required field cannot be empty");
-    }
-  });
-});
-
 for (const country in countries) {
-  let temp = document.createElement("option");
-  temp.textContent = country;
-  countrySelector.appendChild(temp);
+  let option = document.createElement("option");
+  option.textContent = country;
+  countrySelector.appendChild(option);
 }
 
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  validateForm();
+  form.reportValidity();
+});
+
+const validateForm = () => {
+  missingValues();
+  checkZip(countrySelector.value);
+  passwordMatch();
+};
+
+const missingValues = () => {
+  elements.forEach((element) => {
+    element.setCustomValidity(
+      element.validity.valueMissing ? "Required field cannot be empty" : ""
+    );
+  });
+};
+
 const checkZip = (country) => {
-  const constraint = countries[country][0];
-
-  if (constraint.test(zip.value)) {
-    zip.setCustomValidity("");
-  } else {
-    zip.setCustomValidity(countries[country][1]);
-  }
+  const { regex, errorMsg } = countries[country];
+  zip.setCustomValidity(regex.test(zip.value) ? "" : errorMsg);
 };
 
-const selectedCountry = () => {
-  for (const country of document.querySelectorAll("option")) {
-    if (country.selected == true) {
-      return country.textContent;
-    }
-  }
+const passwordMatch = () => {
+  passwordConfirmation.setCustomValidity(
+    password.value !== passwordConfirmation.value
+      ? "Passwords are not matching"
+      : ""
+  );
 };
 
-zip.addEventListener("input", () => {
-  checkZip(selectedCountry());
-});
+const emailValidation = () => {
+  email.setCustomValidity(
+    email.validity.typeMismatch ? "Please input a valid email address" : ""
+  );
+};
 
-countrySelector.addEventListener("click", () => {
-  checkZip(selectedCountry());
-});
+const attachEventListeners = () => {
+  zip.addEventListener("input", () => checkZip(countrySelector.value));
+  countrySelector.addEventListener("change", () =>
+    checkZip(countrySelector.value)
+  );
+  password.addEventListener("input", () => passwordMatch);
+  passwordConfirmation.addEventListener("input", () => passwordMatch);
+  email.addEventListener("input", () => emailValidation);
+};
 
-passwordConfirmation.addEventListener("input", () => {
-  if (password.value != passwordConfirmation.value) {
-    passwordConfirmation.setCustomValidity("Passwords are not matching");
-  } else {
-    passwordConfirmation.setCustomValidity("");
-  }
-});
+attachEventListeners();
